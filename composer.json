@@ -1,0 +1,26 @@
+{
+    "name": "wearesho-team/yii2-single-table-inheritance",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Letnikow",
+            "email": "reclamme@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.2",
+        "yiisoft/yii2": "2.0.15.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wearesho\\Yii\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wearesho\\Yii\\Tests\\": "tests"
+        }
+    }
+}
