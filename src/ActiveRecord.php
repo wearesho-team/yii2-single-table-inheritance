@@ -1,14 +1,14 @@
 <?php
 
-namespace Wearesho\Yii;
+namespace Wearesho\Yii\SingleTableInheritance;
 
 use yii\db;
 
 /**
- * Class SingleTableInheritance
- * @package Wearesho\Yii
+ * Class ActiveRecord
+ * @package Wearesho\Yii\SingleTableInheritance
  */
-abstract class SingleTableInheritance extends db\ActiveRecord
+abstract class ActiveRecord extends db\ActiveRecord
 {
     /** @var string Path to class */
     protected static $factoryClass;
@@ -26,7 +26,7 @@ abstract class SingleTableInheritance extends db\ActiveRecord
         $isInstantiable = $currentReflection->isInstantiable();
 
         if ($isInstantiable && is_null(static::$inheritanceFieldValue)) {
-            throw new SingleTableInheritance\Exception(
+            throw new Exception(
                 "You must specify \$inheritanceFieldValue for inherited class " . $currentClass,
                 3
             );
@@ -50,22 +50,22 @@ abstract class SingleTableInheritance extends db\ActiveRecord
     public static function instantiate($row)
     {
         if (!static::$factoryClass) {
-            throw new SingleTableInheritance\Exception(
+            throw new Exception(
                 "You must specify \$factoryClass for " . get_called_class(),
                 4
             );
         }
 
         if (!class_exists(static::$factoryClass)) {
-            throw new SingleTableInheritance\Exception(
+            throw new Exception(
                 "Specified factory class " . static::$factoryClass . ' does not exist',
                 5
             );
         }
 
         $factoryClassReflection = new \ReflectionClass(static::$factoryClass);
-        if (!$factoryClassReflection->implementsInterface(SingleTableInheritance\FactoryInterface::class)) {
-            throw new SingleTableInheritance\Exception(
+        if (!$factoryClassReflection->implementsInterface(FactoryInterface::class)) {
+            throw new Exception(
                 "Specified factory class " . static::$factoryClass . ' must implement ' . FactoryInterface::class,
                 6
             );
@@ -81,7 +81,7 @@ abstract class SingleTableInheritance extends db\ActiveRecord
      */
     public static function queryClass(): string
     {
-        return SingleTableInheritance\Query::class;
+        return Query::class;
     }
 
     public function init()

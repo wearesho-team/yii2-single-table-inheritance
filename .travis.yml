@@ -1,0 +1,27 @@
+language: php
+services:
+  - postgresql
+
+php:
+    - 7.2
+
+before_script:
+    - travis_retry composer self-update
+    - travis_retry composer install --no-interaction --prefer-source
+
+before_install:
+    - psql -c 'create database sti;' -U postgres
+
+script:
+    - ./vendor/bin/phpcs --standard=PSR2 ./src ./tests
+    - ./vendor/bin/phpunit --coverage-clover=coverage.xml
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
+
+env:
+    - DB_TYPE: pgsql
+      DB_HOST: localhost
+      DB_USER: postgres
+      DB_NAME: sti
+      DB_PASS:

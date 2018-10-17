@@ -11,16 +11,33 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.2",
-        "yiisoft/yii2": "2.0.15.1"
+        "yiisoft/yii2": "^2.0.15.1"
     },
     "autoload": {
         "psr-4": {
-            "Wearesho\\Yii\\": "src"
+            "Wearesho\\Yii\\SingleTableInheritance\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Wearesho\\Yii\\Tests\\": "tests"
+            "Wearesho\\Yii\\SingleTableInheritance\\Tests\\": "tests"
         }
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^2.5",
+        "phpunit/phpunit": "^7.4",
+        "yiisoft/yii2-phpunit": "dev-master",
+        "squizlabs/php_codesniffer": "^3.3"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:Horat1us/yii2-phpunit.git"
+        }
+    ],
+    "scripts": {
+        "lint": "./vendor/bin/phpcs --standard=PSR2 ./src ./tests",
+        "phpcbf": "./vendor/bin/phpcbf --standard=PSR2 ./src ./tests",
+        "test": "./vendor/bin/phpunit"
     }
 }
