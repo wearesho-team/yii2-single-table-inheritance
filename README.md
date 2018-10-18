@@ -1,4 +1,6 @@
 # Yii2 Single Table Inheritance
+[![Build Status](https://travis-ci.org/wearesho-team/yii2-single-table-inheritance.svg?branch=master)](https://travis-ci.org/wearesho-team/yii2-single-table-inheritance)
+[![codecov](https://codecov.io/gh/wearesho-team/yii2-single-table-inheritance/branch/master/graph/badge.svg)](https://codecov.io/gh/wearesho-team/yii2-single-table-inheritance)
 
 This library allows you to implement several models that refer to single table
 (f.e. table - contact, models - phone, email, skype etc.).
