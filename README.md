@@ -78,3 +78,7 @@ $email = new Email(['value' => 'test@gmail.com']);
 assert($email->type === Contact::EMAIL);
 
 ``` 
+
+## License
+[MIT](./LICENSE)
+
