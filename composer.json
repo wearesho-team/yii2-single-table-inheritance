@@ -1,5 +1,6 @@
 {
     "name": "wearesho-team/yii2-single-table-inheritance",
+    "description": "Single table inheritance implementation",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -38,6 +39,7 @@
     "scripts": {
         "lint": "./vendor/bin/phpcs --standard=PSR2 ./src ./tests",
         "phpcbf": "./vendor/bin/phpcbf --standard=PSR2 ./src ./tests",
-        "test": "./vendor/bin/phpunit"
+        "test": "./vendor/bin/phpunit",
+        "cover": "./vendor/bin/phpunit --coverage-clover=coverage.xml"
     }
 }

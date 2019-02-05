@@ -1,28 +1,30 @@
 language: php
+
 services:
   - postgresql
+  - mysql
 
 php:
-    - 7.2
-    - 7.3
+  - 7.2
+  - 7.3
 
-before_script:
-    - travis_retry composer self-update
-    - travis_retry composer install --no-interaction --prefer-source
-
-before_install:
-    - psql -c 'create database sti;' -U postgres
-
-script:
-    - ./vendor/bin/phpcs --standard=PSR2 ./src ./tests
-    - ./vendor/bin/phpunit --coverage-clover=coverage.xml
-
-after_success:
-    - bash <(curl -s https://codecov.io/bash)
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 env:
-    - DB_TYPE: pgsql
-      DB_HOST: localhost
-      DB_USER: postgres
-      DB_NAME: sti
-      DB_PASS:
+  - DB_TYPE=pgsql DB_NAME=sti DB_HOST=localhost DB_PORT=5432 DB_USERNAME=postgres DB_PASSWORD=root
+  - DB_TYPE=mysql DB_NAME=sti DB_HOST=127.0.0.1 DB_PORT=3306 DB_USERNAME=root DB_PASSWORD=
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source
+  - sh -c "if [ '$DB_TYPE' = 'pgsql' ]; then psql -c 'CREATE DATABASE sti;' -U postgres; fi"
+  - sh -c "if [ '$DB_TYPE' = 'mysql' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS sti;'; fi"
+
+script:
+  - composer lint
+  - travis_retry composer cover
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

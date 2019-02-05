@@ -26,18 +26,40 @@ class ActiveRecordTest extends AbstractTestCase
 
     public function testNotFindWithOtherInheritanceValue(): void
     {
-        $id = \Yii::$app->db
-            ->createCommand('INSERT INTO test (inheritance_field) VALUES (\'unexpected\') RETURNING ID;')
-            ->queryScalar();
+        $sql = "INSERT INTO test (inheritance_field) VALUES ('unexpected')";
+        $driverName = \Yii::$app->db->getDriverName();
 
-        $this->assertFalse(ActiveRecord::find()->andWhere(['=', 'id', $id,])->exists());
+        if ($driverName === 'pgsql') {
+            $sql .= " RETURNING ID;";
+        }
+
+        $executed = \Yii::$app->db->createCommand($sql)->execute();
+
+        if ($driverName === 'pgsql') {
+            $id = $executed;
+        } elseif ($driverName === 'mysql') {
+            $id = \Yii::$app->db->createCommand("SELECT LAST_INSERT_ID();")->execute();
+        }
+
+        $this->assertFalse(ActiveRecord::find()->andWhere(['=', 'id', $id ?? null,])->exists());
     }
 
     public function testFindWithCorrectInheritanceValue(): void
     {
-        $id = \Yii::$app->db
-            ->createCommand('INSERT INTO test (inheritance_field) VALUES (\'test\') RETURNING ID;')
-            ->queryScalar();
+        $sql = "INSERT INTO test (inheritance_field) VALUES ('test')";
+        $driverName = \Yii::$app->db->getDriverName();
+
+        if ($driverName === 'pgsql') {
+            $sql .= " RETURNING ID;";
+        }
+
+        $executed = \Yii::$app->db->createCommand($sql)->execute();
+
+        if ($driverName === 'pgsql') {
+            $id = $executed;
+        } elseif ($driverName === 'mysql') {
+            $id = \Yii::$app->db->createCommand("SELECT LAST_INSERT_ID();")->execute();
+        }
 
         $this->assertTrue(ActiveRecord::find()->andWhere(['=', 'id', $id,])->exists());
     }
