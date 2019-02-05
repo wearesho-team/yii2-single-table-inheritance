@@ -24,6 +24,11 @@ abstract class ActiveRecord extends db\ActiveRecord
         return static::$inheritanceField;
     }
 
+    public static function getInheritanceFieldValue(): string
+    {
+        return static::$inheritanceFieldValue;
+    }
+
     public static function find(): db\ActiveQuery
     {
         $currentClass = get_called_class();

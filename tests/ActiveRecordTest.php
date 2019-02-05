@@ -122,4 +122,12 @@ class ActiveRecordTest extends AbstractTestCase
             ActiveRecord::getInheritanceField()
         );
     }
+
+    public function testGetInheritanceFieldValue(): void
+    {
+        $this->assertEquals(
+            ActiveRecord::$inheritanceFieldValue,
+            ActiveRecord::getInheritanceFieldValue()
+        );
+    }
 }
