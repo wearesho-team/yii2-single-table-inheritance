@@ -31,11 +31,11 @@ abstract class ActiveRecord extends db\ActiveRecord
 
     public static function find(): db\ActiveQuery
     {
-        $currentClass = get_called_class();
+        $currentClass = \get_called_class();
         $currentReflection = new \ReflectionClass($currentClass);
         $isInstantiable = $currentReflection->isInstantiable();
 
-        if ($isInstantiable && is_null(static::$inheritanceFieldValue)) {
+        if ($isInstantiable && \is_null(static::$inheritanceFieldValue)) {
             throw new Exception(
                 "You must specify \$inheritanceFieldValue for inherited class " . $currentClass,
                 3
@@ -52,7 +52,7 @@ abstract class ActiveRecord extends db\ActiveRecord
         }
 
         $queryClassName = static::queryClass();
-        $inheritanceQueryInstance = new $queryClassName(get_called_class(), $params);
+        $inheritanceQueryInstance = new $queryClassName(\get_called_class(), $params);
 
         return $inheritanceQueryInstance;
     }
@@ -61,12 +61,12 @@ abstract class ActiveRecord extends db\ActiveRecord
     {
         if (!static::$factoryClass) {
             throw new Exception(
-                "You must specify \$factoryClass for " . get_called_class(),
+                "You must specify \$factoryClass for " . \get_called_class(),
                 4
             );
         }
 
-        if (!class_exists(static::$factoryClass)) {
+        if (!\class_exists(static::$factoryClass)) {
             throw new Exception(
                 "Specified factory class " . static::$factoryClass . ' does not exist',
                 5
@@ -82,7 +82,7 @@ abstract class ActiveRecord extends db\ActiveRecord
         }
 
         /** @see FactoryInterface::getInstance() */
-        $instance = call_user_func([static::$factoryClass, 'getInstance'], $row);
+        $instance = \call_user_func([static::$factoryClass, 'getInstance'], $row);
         return $instance;
     }
 

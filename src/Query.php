@@ -27,7 +27,7 @@ class Query extends ActiveQuery
     {
         if (!empty($this->inheritanceFieldValue)) {
             $this->andWhere([
-                (is_array($this->inheritanceFieldValue) ? 'in' : '='),
+                (\is_array($this->inheritanceFieldValue) ? 'in' : '='),
                 "{$this->tableName}.{$this->inheritanceField}",
                 $this->inheritanceFieldValue
             ]);
