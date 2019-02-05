@@ -14,7 +14,7 @@ class ActiveRecord extends SingleTableInheritance\ActiveRecord
 {
     public static $factoryClass;
 
-    protected static $inheritanceField = 'inheritance_field';
+    public static $inheritanceField = 'inheritance_field';
 
     public static $inheritanceFieldValue = 'test';
 

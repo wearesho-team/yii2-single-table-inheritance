@@ -114,4 +114,12 @@ class ActiveRecordTest extends AbstractTestCase
         $this->assertInstanceOf(ActiveRecord::class, $record);
         $this->assertEquals('test', $record->inheritance_field);
     }
+
+    public function testGetInheritanceField(): void
+    {
+        $this->assertEquals(
+            ActiveRecord::$inheritanceField,
+            ActiveRecord::getInheritanceField()
+        );
+    }
 }
